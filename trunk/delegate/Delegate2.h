@@ -86,10 +86,13 @@ private:
 public:
 	//copy constructor
 	Delegate2(const Delegate2<P1, P2, R>& _delegate) {
-		operator=(_delegate);
+		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); it++) {
+			delegates.push_back(new PointerToFunction2<P1, P2, R>(*it));
+		}
 	}
 	//assignment operator
 	Delegate2<P1, P2, R>& operator=(const Delegate2<P1, P2, R>& _delegate) {
+		delegates.clear();
 		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); it++) {
 			delegates.push_back(new PointerToFunction2<P1, P2, R>(*it));
 		}

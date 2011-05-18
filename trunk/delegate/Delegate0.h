@@ -92,6 +92,7 @@ public:
 	}
 	//assignment operator
 	Delegate<R>& operator=(const Delegate<R>& _delegate) {
+		delegates.clear();
 		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); it++) {
 			delegates.push_back(new PointerToFunction0<R>(*it));
 		}
