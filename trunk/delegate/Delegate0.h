@@ -11,8 +11,8 @@
  * Date created: 22/03/2011
  * Date last modified: 22/03/2011
  */
-#ifndef _DELEGATE_H_
-#define _DELEGATE_H_
+#ifndef DELEGATE_DELEGATE0_H
+#define DELEGATE_DELEGATE0_H
 
 #include <list>
 
