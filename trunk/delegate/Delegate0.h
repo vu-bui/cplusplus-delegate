@@ -52,10 +52,9 @@ public:
 };
 
 //pointer to member function template
-template<typename C, typename R>
+template<typename C, typename R, typename delegate_fn = R (C::*)()>
 class PointerToMemberFunction0 : public PointerToFunction0<R> {
 private:
-	typedef R (C::*delegate_fn)();
 	C& obj;
 	delegate_fn fn;
 
@@ -124,6 +123,12 @@ public:
 		delegates.push_back(new PointerToMemberFunction0<C, R>(_obj, _fn));
 	}
 
+	//add const member function
+	template<typename C>
+	void add(const C& _obj, R (C::*_fn)() const) {
+		delegates.push_back(new PointerToMemberFunction0<const C, R, R (C::*)() const>(_obj, _fn));
+	}
+
 	//remove static function
 	bool remove(R (*_fn)()) {
 		PointerToStaticFunction0<R> pts(_fn);
@@ -140,6 +145,19 @@ public:
 	template<typename C>
 	bool remove(C& _obj, R (C::*_fn)()) {
 		PointerToMemberFunction0<C, R> ptm(_obj, _fn);
+		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
+			if(ptm == **it) {
+				delegates.erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
+
+	//remove const member function
+	template<typename C>
+	bool remove(const C& _obj, R (C::*_fn)() const) {
+		PointerToMemberFunction0<const C, R, R (C::*)() const> ptm(_obj, _fn);
 		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(ptm == **it) {
 				delegates.erase(it);
