@@ -86,14 +86,14 @@ private:
 public:
 	//copy constructor
 	Delegate2(const Delegate2<P1, P2, R>& _delegate) {
-		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); it++) {
+		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); ++it) {
 			delegates.push_back(new PointerToFunction2<P1, P2, R>(*it));
 		}
 	}
 	//assignment operator
 	Delegate2<P1, P2, R>& operator=(const Delegate2<P1, P2, R>& _delegate) {
 		delegates.clear();
-		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); it++) {
+		for(Iterator it = _delegate.delegates.begin(); it != _delegate.delegates.end(); ++it) {
 			delegates.push_back(new PointerToFunction2<P1, P2, R>(*it));
 		}
 		return *this;
@@ -108,7 +108,7 @@ public:
 		add(_obj, _fn);
 	}
 	~Delegate2() {
-		for(Iterator it = delegates.begin(); it != delegates.end(); it++) {
+		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			delete *it;
 		}
 	}
@@ -127,7 +127,7 @@ public:
 	//remove static function
 	bool remove(R (*_fn)(P1, P2)) {
 		PointerToStaticFunction2<P1, P2, R> pts(_fn);
-		for(Iterator it = delegates.begin(); it != delegates.end(); it++) {
+		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(pts == **it) {
 				delegates.erase(it);
 				return true;
@@ -140,7 +140,7 @@ public:
 	template<typename C>
 	bool remove(C& _obj, R (C::*_fn)(P1, P2)) {
 		PointerToMemberFunction2<C, P1, P2, R> ptm(_obj, _fn);
-		for(Iterator it = delegates.begin(); it != delegates.end(); it++) {
+		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(ptm == **it) {
 				delegates.erase(it);
 				return true;
@@ -152,7 +152,7 @@ public:
 	//invoke methods
 	R operator()(P1 _param1, P2 _param2) {
 		if(delegates.size() > 0) {
-			for(Iterator it = delegates.begin(); it != --delegates.end(); it++) {
+			for(Iterator it = delegates.begin(); it != --delegates.end(); ++it) {
 				(*it)->operator()(_param1, _param2);
 			}
 			return delegates.back()->operator()(_param1, _param2);
