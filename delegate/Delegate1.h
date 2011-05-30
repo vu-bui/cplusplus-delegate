@@ -134,6 +134,7 @@ public:
 		PointerToStaticFunction1<P, R> pts(_fn);
 		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(pts == **it) {
+				delete *it;
 				delegates.erase(it);
 				return true;
 			}
@@ -147,6 +148,7 @@ public:
 		PointerToMemberFunction1<C, P, R> ptm(_obj, _fn);
 		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(ptm == **it) {
+				delete *it;
 				delegates.erase(it);
 				return true;
 			}
@@ -160,6 +162,7 @@ public:
 		PointerToMemberFunction1<const C, P, R, R (C::*)(P) const> ptm(_obj, _fn);
 		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
 			if(ptm == **it) {
+				delete *it;
 				delegates.erase(it);
 				return true;
 			}
