@@ -31,5 +31,13 @@ int main(void) {
 
 	std::cout << "return value: " << del(2, 3) << '\n';
 
+	std::cout << "remove all\n";
+	del.remove(Test::sum);
+	del.remove(t, &Test::substract);
+	del.remove(t, &Test::multiply);
+	del.remove(divide);
+
+	std::cout << "call again, return value: " << del(2, 3) << '\n';
+
 	return 0;
 }
