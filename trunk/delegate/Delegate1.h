@@ -82,6 +82,17 @@ private:
 	//typename must exist for P and R are unknown and can be mix up with *
 	typedef typename std::list<PointerToFunction1<P, R>*>::iterator Iterator;
 
+	bool remove(const PointerToFunction1<P, R>& _pt) {
+		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
+			if(_pt == **it) {
+				delete *it;
+				delegates.erase(it);
+				return true;
+			}
+		}
+		return false;
+	}
+
 public:
 	//copy constructor
 	Delegate1(const Delegate1<P, R>& _delegate) {
@@ -132,42 +143,21 @@ public:
 	//remove static function
 	bool remove(R (*_fn)(P)) {
 		PointerToStaticFunction1<P, R> pts(_fn);
-		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
-			if(pts == **it) {
-				delete *it;
-				delegates.erase(it);
-				return true;
-			}
-		}
-		return false;
+		return remove(pts);
 	}
 
 	//remove member function
 	template<typename C>
 	bool remove(C& _obj, R (C::*_fn)(P)) {
 		PointerToMemberFunction1<C, P, R> ptm(_obj, _fn);
-		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
-			if(ptm == **it) {
-				delete *it;
-				delegates.erase(it);
-				return true;
-			}
-		}
-		return false;
+		return remove(ptm);
 	}
 
 	//remove const member function
 	template<typename C>
 	bool remove(const C& _obj, R (C::*_fn)(P) const) {
 		PointerToMemberFunction1<const C, P, R, R (C::*)(P) const> ptm(_obj, _fn);
-		for(Iterator it = delegates.begin(); it != delegates.end(); ++it) {
-			if(ptm == **it) {
-				delete *it;
-				delegates.erase(it);
-				return true;
-			}
-		}
-		return false;
+		return remove(ptm);
 	}
 
 	//invoke methods
