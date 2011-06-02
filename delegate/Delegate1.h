@@ -15,16 +15,15 @@
 #define DELEGATE_DELEGATE1_H
 
 #include <list>
+#include "IComparable.h"
 
 namespace delegate {
 //base function pointer template
 template<typename P, typename R>
-struct PointerToFunction1 {
+struct PointerToFunction1 :  IComparable<PointerToFunction1<P, R> >{
 	virtual ~PointerToFunction1() {}
 	//call the function
 	virtual R operator()(P) = 0;
-	//compare two functions
-	virtual bool operator==(const PointerToFunction1<P, R>&) const = 0;
 };
 
 //pointer to static or extern "C" function template
