@@ -141,22 +141,19 @@ public:
 
 	//remove static function
 	bool remove(R (*_fn)(P)) {
-		PointerToStaticFunction1<P, R> pts(_fn);
-		return remove(pts);
+		return remove(PointerToStaticFunction1<P, R>(_fn));
 	}
 
 	//remove member function
 	template<typename C>
 	bool remove(C& _obj, R (C::*_fn)(P)) {
-		PointerToMemberFunction1<C, P, R> ptm(_obj, _fn);
-		return remove(ptm);
+		return remove(PointerToMemberFunction1<C, P, R>(_ojb, _fn));
 	}
 
 	//remove const member function
 	template<typename C>
 	bool remove(const C& _obj, R (C::*_fn)(P) const) {
-		PointerToMemberFunction1<const C, P, R, R (C::*)(P) const> ptm(_obj, _fn);
-		return remove(ptm);
+		return remove(PointerToMemberFunction1<const C, P, R, R (C::*)(O) const>(_obj, _fn));
 	}
 
 	//invoke methods
