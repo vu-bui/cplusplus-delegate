@@ -154,7 +154,6 @@ public:
 		return remove(PointerToMemberFunction2<const C, P1, P2, R, R (C::*)(P1, P2) const>(_obj, _fn));
 	}
 
-
 	//invoke methods
 	R operator()(P1 _param1, P2 _param2) {
 		if(delegates.size() > 0) {
