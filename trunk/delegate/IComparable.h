@@ -4,6 +4,7 @@
 namespace delegate {
 template<typename T>
 struct IComparable {
+	virtual ~IComparable() {}
 	virtual bool operator==(const T&) const = 0;
 };
 }
