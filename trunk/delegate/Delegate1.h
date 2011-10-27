@@ -20,7 +20,7 @@
 namespace delegate {
 //base function pointer template
 template<typename P, typename R>
-struct PointerToFunction1 :  IComparable<PointerToFunction1<P, R> >{
+struct PointerToFunction1 : IComparable<PointerToFunction1<P, R> > {
 	virtual ~PointerToFunction1() {}
 	//call the function
 	virtual R operator()(P) = 0;
