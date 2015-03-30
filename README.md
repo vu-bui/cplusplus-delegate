@@ -2,4 +2,4 @@ This is a part of my assignment at university. The idea is to create an alternat
 
 You can use my code for free without any acknowledgement, but please keep my copyright in the source file :-)
 
-Contact Information: Vu Bui<vuluanbui@gmail.com>
+Contact Information: Vu Bui <vuluanbui@gmail.com>
